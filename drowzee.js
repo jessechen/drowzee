@@ -1,20 +1,22 @@
 $(function() {
     const TAU = 2 * Math.PI;
-    const framesPerSecond = 6;
+    const pixelsPerSecond = 240;
     const maxRadius = 386;
 
     const circleCount = 12;
 
     const calculateRadius = (index) => {
-        return index / circleCount * maxRadius;
+        return index / (circleCount + 3) * maxRadius;
     };
 
     const getX = (index, distance) => {
-        return index * distance;
+        const radius = calculateRadius(index);
+        return radius * Math.sin(distance / radius);
     };
 
     const getY = (index, distance) => {
-        return index * distance;
+        const radius = calculateRadius(index);
+        return radius * Math.cos(distance / radius);
     };
 
     const draw = (distance) => {
@@ -27,7 +29,7 @@ $(function() {
 
     const background = canvas
         .selectAll(".background")
-        .data(_.range(1, circleCount + 1))
+        .data(_.range(3, circleCount + 3))
         .enter().append("circle")
             .classed("background", true)
             .attr("cx", 0)
@@ -38,7 +40,7 @@ $(function() {
 
     const foreground = canvas
         .selectAll(".foreground")
-        .data(_.range(1, circleCount + 1))
+        .data(_.range(3, circleCount + 3))
         .enter().append("circle")
             .classed("foreground", true)
             .attr("cx", getX)
@@ -48,7 +50,7 @@ $(function() {
             .attr("fill", "purple");
 
     d3.timer((time) => {
-        const distance = time/1000 * framesPerSecond;
+        const distance = time/1000 * pixelsPerSecond;
         draw(distance);
     });
 });
