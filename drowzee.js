@@ -1,6 +1,6 @@
 $(function() {
     const TAU = 2 * Math.PI;
-    const pixelsPerSecond = 240;
+    const revolutionsPerSecond = 0.05;
     const maxRadius = 386;
 
     const circleCount = 12;
@@ -9,14 +9,16 @@ $(function() {
         return index / (circleCount + 3) * maxRadius;
     };
 
-    const getX = (index, distance) => {
+    const getX = (index, revolutions) => {
         const radius = calculateRadius(index);
-        return radius * Math.sin(distance / radius);
+        const actualRevolutions = revolutions * (circleCount + 5 - index);
+        return radius * Math.sin(actualRevolutions * TAU);
     };
 
-    const getY = (index, distance) => {
+    const getY = (index, revolutions) => {
         const radius = calculateRadius(index);
-        return radius * Math.cos(distance / radius);
+        const actualRevolutions = revolutions * (circleCount + 5 - index);
+        return radius * Math.cos(actualRevolutions * TAU);
     };
 
     const draw = (distance) => {
@@ -50,7 +52,7 @@ $(function() {
             .attr("fill", "purple");
 
     d3.timer((time) => {
-        const distance = time/1000 * pixelsPerSecond;
-        draw(distance);
+        const revolutions = time/1000 * revolutionsPerSecond;
+        draw(revolutions);
     });
 });
