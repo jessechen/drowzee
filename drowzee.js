@@ -49,7 +49,7 @@ const orbits = surface
         .attr("cx", 0)
         .attr("cy", 0)
         .attr("r", orbitRadius)
-        .attr("stroke", "blue")
+        .attr("stroke", "#88f")
         .attr("fill-opacity", 0);
 
 const planets = surface
@@ -62,6 +62,8 @@ const planets = surface
         .attr("r", 8)
         .attr("stroke", "black")
         .attr("fill", "purple");
+
+draw(0);
 
 d3.timer(time => {
     const auts = time/1000 * AUTS_PER_SECOND;
