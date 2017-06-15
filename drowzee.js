@@ -4,25 +4,29 @@ const AUTS_PER_LOOP = 10000;
 const AUTS_PER_SECOND = 500;
 const LARGEST_ORBIT_RADIUS = 386;
 
-// The divisor starts at this number and increases by 1 for each orbit closer to the center.
-const OUTERMOST_DIVISOR = 2;
+// The number of revolutions a planet makes per perfect loop starts at this number
+// and increases by 1 for each orbit closer to the center.
+const OUTERMOST_REVOLUTIONS_PER_LOOP = 2;
 // Don't draw any orbits smaller than this one.
 const INNERMOST_ORBIT_INDEX = 3;
 
 const orbitCount = 12;
 
 const getX = function(index, auts) {
-    return polarToCartesian(index, auts, Math.sin);
+    const [r, theta] = getPolarCoordinates(index, auts);
+    return r * Math.sin(theta);
 };
 
 const getY = function(index, auts) {
-    return polarToCartesian(index, auts, Math.cos);
+    const [r, theta] = getPolarCoordinates(index, auts);
+    return r * Math.cos(theta);
 };
 
-const polarToCartesian = function(index, auts, fn) {
+const getPolarCoordinates = function(index, auts) {
     const radius = orbitRadius(index);
-    const revolutions = auts / AUTS_PER_LOOP * (orbitCount + INNERMOST_ORBIT_INDEX + OUTERMOST_DIVISOR - index);
-    return radius * fn(revolutions * TAU);
+    const speed = orbitCount + INNERMOST_ORBIT_INDEX + OUTERMOST_REVOLUTIONS_PER_LOOP - index;
+    const revolutions = auts / AUTS_PER_LOOP * speed;
+    return [radius, revolutions * TAU];
 };
 
 const orbitRadius = function(index) {
