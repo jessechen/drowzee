@@ -33,10 +33,16 @@ const orbitRadius = function(index) {
     return index / (orbitCount + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
 };
 
+const seek = function(evt, auts) {
+    draw(auts);
+};
+
 const draw = function(auts) {
     planets
         .attr("cx", o => { return getX(o, auts) })
-        .attr("cy", o => { return getY(o, auts) })
+        .attr("cy", o => { return getY(o, auts) });
+    slider.value(auts);
+    autText.text(Math.floor(auts));
 };
 
 const surface = d3.select("svg");
@@ -62,6 +68,20 @@ const planets = surface
         .attr("r", 8)
         .attr("stroke", "black")
         .attr("fill", "purple");
+
+const axis = d3.svg.axis();
+const slider = d3.slider()
+    .axis(axis).min(0).max(AUTS_PER_LOOP - 1)
+    .on("slide", seek);
+
+const autDisplay = d3.select("body").append("div")
+    .style("width", "100vmin")
+    .attr("id", "slider")
+    .call(slider);
+
+const autText = d3.select("body").append("span")
+    .attr("id", "aut-text")
+    .text("0");
 
 draw(0);
 
