@@ -1,7 +1,6 @@
 # Drowzee
 
 ### A simple interactive visualization with D3.
-=====
 
 Production
 ----------

@@ -11,6 +11,8 @@ const OUTERMOST_REVOLUTIONS_PER_LOOP = 2;
 const INNERMOST_ORBIT_INDEX = 3;
 
 const orbitCount = 12;
+let startAuts = 0;
+let paused = false;
 
 const getX = function(index, auts) {
     const [r, theta] = getPolarCoordinates(index, auts);
@@ -34,7 +36,9 @@ const orbitRadius = function(index) {
 };
 
 const seek = function(evt, auts) {
-    draw(auts);
+    startAuts = auts;
+    paused = true;
+    draw(startAuts);
 };
 
 const draw = function(auts) {
@@ -86,6 +90,7 @@ const autText = d3.select("body").append("span")
 draw(0);
 
 d3.timer(time => {
-    const auts = time/1000 * AUTS_PER_SECOND;
+    auts = (startAuts + time/1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
     draw(auts);
+    return paused;
 });
