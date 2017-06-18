@@ -37,22 +37,21 @@ const orbitRadius = function(index) {
 
 const seek = function(evt, auts) {
     startAuts = auts;
-    play(false);
+    togglePlay(false);
     draw(startAuts);
 };
 
-const play = function(value) {
+const togglePlay = function(value) {
     if (value === undefined) {
         value = !playing;
     }
-    playing = value;
     d3.select("button").text(playing ? "❚❚ Pause" : "▶ Play");
-    if (playing) {
-        d3.timer(time => {
-            auts = (startAuts + time/1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
-            draw(auts);
-            return !playing;
-        });
+    if (value) {
+        playing = true;
+        d3.timer(tick);
+    } else {
+        startAuts = slider.value();
+        playing = false;
     }
 };
 
@@ -62,6 +61,14 @@ const draw = function(auts) {
         .attr("cy", o => { return getY(o, auts) });
     slider.value(auts);
     autText.text(Math.floor(auts));
+};
+
+const tick = function(time) {
+    if (playing) {
+        auts = (startAuts + time / 1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
+        draw(auts);
+    }
+    return !playing;
 };
 
 const surface = d3.select("svg");
@@ -103,7 +110,7 @@ const autText = d3.select("body").append("span")
     .text("0");
 
 const playButton = d3.select("body").append("button")
-    .on("click", play);
+    .on("click", togglePlay);
 
 draw(0);
-play(false);
+togglePlay(false);
