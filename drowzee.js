@@ -1,6 +1,6 @@
 const TAU = 2 * Math.PI;
 // This many arbitrary units of time is one perfect loop.
-const AUTS_PER_LOOP = 10000;
+const AUTS_PER_LOOP = 5544;
 const AUTS_PER_SECOND = 500;
 const LARGEST_ORBIT_RADIUS = 386;
 
@@ -12,7 +12,7 @@ const INNERMOST_ORBIT_INDEX = 3;
 
 const orbitCount = 12;
 let startAuts = 0;
-let paused = false;
+let playing = false;
 
 const getX = function(index, auts) {
     const [r, theta] = getPolarCoordinates(index, auts);
@@ -37,8 +37,23 @@ const orbitRadius = function(index) {
 
 const seek = function(evt, auts) {
     startAuts = auts;
-    paused = true;
+    play(false);
     draw(startAuts);
+};
+
+const play = function(value) {
+    if (value === undefined) {
+        value = !playing;
+    }
+    playing = value;
+    d3.select("button").text(playing ? "❚❚ Pause" : "▶ Play");
+    if (playing) {
+        d3.timer(time => {
+            auts = (startAuts + time/1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
+            draw(auts);
+            return !playing;
+        });
+    }
 };
 
 const draw = function(auts) {
@@ -87,10 +102,8 @@ const autText = d3.select("body").append("span")
     .attr("id", "aut-text")
     .text("0");
 
-draw(0);
+const playButton = d3.select("body").append("button")
+    .on("click", play);
 
-d3.timer(time => {
-    auts = (startAuts + time/1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
-    draw(auts);
-    return paused;
-});
+draw(0);
+play(false);
