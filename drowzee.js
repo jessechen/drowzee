@@ -45,7 +45,6 @@ const togglePlay = function(value) {
     if (value === undefined) {
         value = !playing;
     }
-    d3.select("button").text(playing ? "❚❚ Pause" : "▶ Play");
     if (value) {
         playing = true;
         d3.timer(tick);
@@ -53,6 +52,7 @@ const togglePlay = function(value) {
         startAuts = slider.value();
         playing = false;
     }
+    playButton.text(playing ? "❚❚ Pause" : "▶ Play");
 };
 
 const draw = function(auts) {
@@ -60,7 +60,7 @@ const draw = function(auts) {
         .attr("cx", o => { return getX(o, auts) })
         .attr("cy", o => { return getY(o, auts) });
     slider.value(auts);
-    autText.text(Math.floor(auts));
+    timeInput.property("value", Math.floor(auts));
 };
 
 const tick = function(time) {
@@ -100,17 +100,13 @@ const slider = d3.slider()
     .axis(axis).min(0).max(AUTS_PER_LOOP - 1)
     .on("slide", seek);
 
-const autDisplay = d3.select("body").append("div")
-    .style("width", "100vmin")
-    .attr("id", "slider")
+const playButton = d3.select(".play-button")
+    .on("click", togglePlay);
+
+const timeSlider = d3.select(".time-slider")
     .call(slider);
 
-const autText = d3.select("body").append("span")
-    .attr("id", "aut-text")
-    .text("0");
-
-const playButton = d3.select("body").append("button")
-    .on("click", togglePlay);
+const timeInput = d3.select(".time-input");
 
 draw(0);
 togglePlay(false);
