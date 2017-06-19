@@ -13,8 +13,22 @@ body {
 .controls {
     width: 90vmin;
     height: 10vmin;
+    display: flex;
+    align-items: center;
+}
+
+.play-button {
+    width: 13%;
+    margin-right: 2%;
 }
 
 .time-slider {
+    width: 75%;
     cursor: pointer;
+}
+
+.time-input {
+    width: 8%;
+    margin-left: 2%;
+    text-align: right;
 }
