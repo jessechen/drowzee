@@ -35,12 +35,6 @@ const orbitRadius = function(index) {
     return index / (orbitCount + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
 };
 
-const seek = function(evt, auts) {
-    startAuts = auts;
-    togglePlay(false);
-    draw(startAuts);
-};
-
 const togglePlay = function(value) {
     if (value === undefined) {
         value = !playing;
@@ -53,6 +47,26 @@ const togglePlay = function(value) {
         playing = false;
     }
     playButton.text(playing ? "❚❚ Pause" : "▶ Play");
+};
+
+const seek = function(evt, auts) {
+    startAuts = auts;
+    togglePlay(false);
+    draw(startAuts);
+};
+
+const handleInput = function() {
+    let inputValue = parseInt(timeInput.property("value"), 10);
+    if (isNaN(inputValue) || inputValue < 0) {
+        inputValue = 0;
+        timeInput.property("value", inputValue);
+    } else if (inputValue > AUTS_PER_LOOP) {
+        inputValue = AUTS_PER_LOOP - 1;
+        timeInput.property("value", inputValue);
+    }
+    if (slider.value() != inputValue) {
+        slider.value(inputValue);
+    }
 };
 
 const draw = function(auts) {
@@ -106,7 +120,8 @@ const playButton = d3.select(".play-button")
 const timeSlider = d3.select(".time-slider")
     .call(slider);
 
-const timeInput = d3.select(".time-input");
+const timeInput = d3.select(".time-input")
+    .on("input", handleInput);
 
 draw(0);
 togglePlay(false);
