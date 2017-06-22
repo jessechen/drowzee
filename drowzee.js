@@ -1,7 +1,7 @@
 const TAU = 2 * Math.PI;
 // This many arbitrary units of time is one perfect loop.
-const AUTS_PER_LOOP = 5544;
-const SECONDS_PER_LOOP = 10;
+const AUTS_PER_LOOP = 10000;
+const SECONDS_PER_LOOP = 16;
 const LARGEST_ORBIT_RADIUS = 386;
 
 // The number of revolutions a planet makes per perfect loop starts at this number
@@ -29,6 +29,10 @@ const getPolarCoordinates = function(index, auts) {
     const speed = orbitCount + OUTERMOST_REVOLUTIONS_PER_LOOP - index;
     const revolutions = auts / AUTS_PER_LOOP * speed;
     return [radius, revolutions * TAU];
+};
+
+const getColor = function(index) {
+    return d3.hcl(index / orbitCount * 360, 50, 50);
 };
 
 const orbitRadius = function(index) {
@@ -94,7 +98,7 @@ const orbits = surface
         .attr("cx", 0)
         .attr("cy", 0)
         .attr("r", orbitRadius)
-        .attr("stroke", "#88f")
+        .attr("stroke", getColor)
         .attr("fill-opacity", 0);
 
 const planets = surface
@@ -106,7 +110,7 @@ const planets = surface
         .attr("cy", getY)
         .attr("r", 8)
         .attr("stroke", "black")
-        .attr("fill", "purple");
+        .attr("fill", "#22c");
 
 const playButton = d3.select(".play-button")
     .on("click", togglePlay);
