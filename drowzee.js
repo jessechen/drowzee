@@ -1,7 +1,7 @@
 const TAU = 2 * Math.PI;
 // This many arbitrary units of time is one perfect loop.
 const AUTS_PER_LOOP = 5544;
-const AUTS_PER_SECOND = 500;
+const SECONDS_PER_LOOP = 10;
 const LARGEST_ORBIT_RADIUS = 386;
 
 // The number of revolutions a planet makes per perfect loop starts at this number
@@ -54,7 +54,7 @@ const seek = function() {
     draw(startAuts);
 };
 
-const handleInput = function() {
+const parse = function() {
     let inputValue = parseInt(timeInput.property("value"), 10);
     if (isNaN(inputValue) || inputValue < 0) {
         inputValue = 0;
@@ -78,7 +78,7 @@ const draw = function(auts) {
 
 const tick = function(time) {
     if (playing) {
-        auts = (startAuts + time / 1000 * AUTS_PER_SECOND) % AUTS_PER_LOOP;
+        auts = (startAuts + (time / 1000) * (SECONDS_PER_LOOP / AUTS_PER_LOOP)) % AUTS_PER_LOOP;
         draw(auts);
     }
     return !playing;
@@ -117,7 +117,7 @@ const timeSlider = d3.select(".time-slider")
     .on("input", seek);
 
 const timeInput = d3.select(".time-input")
-    .on("input", handleInput);
+    .on("input", parse);
 
 draw(0);
 togglePlay(false);
