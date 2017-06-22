@@ -43,7 +43,7 @@ const togglePlay = function(value) {
         playing = true;
         d3.timer(tick);
     } else {
-        startAuts = slider.value();
+        startAuts = parseInt(timeSlider.property("value"), 10)
         playing = false;
     }
     playButton.text(playing ? "❚❚ Pause" : "▶ Play");
@@ -64,8 +64,8 @@ const handleInput = function() {
         inputValue = AUTS_PER_LOOP - 1;
         timeInput.property("value", inputValue);
     }
-    if (slider.value() != inputValue) {
-        slider.value(inputValue);
+    if (parseInt(timeSlider.property("value"), 10) != inputValue) {
+        timeSlider.property("value", inputValue);
     }
 };
 
@@ -73,7 +73,7 @@ const draw = function(auts) {
     planets
         .attr("cx", o => { return getX(o, auts) })
         .attr("cy", o => { return getY(o, auts) });
-    slider.value(auts);
+    timeSlider.property("value", Math.floor(auts));
     timeInput.property("value", Math.floor(auts));
 };
 
@@ -109,16 +109,12 @@ const planets = surface
         .attr("stroke", "black")
         .attr("fill", "purple");
 
-const axis = d3.svg.axis();
-const slider = d3.slider()
-    .axis(axis).min(0).max(AUTS_PER_LOOP - 1)
-    .on("slide", seek);
-
 const playButton = d3.select(".play-button")
     .on("click", togglePlay);
 
 const timeSlider = d3.select(".time-slider")
-    .call(slider);
+    .attr("min", 0)
+    .attr("max", AUTS_PER_LOOP - 1);
 
 const timeInput = d3.select(".time-input")
     .on("input", handleInput);
