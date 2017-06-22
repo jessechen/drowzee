@@ -10,7 +10,7 @@ body {
     height: 90vmin;
 }
 
-.controls {
+.main-controls {
     width: 90vmin;
     height: 10vmin;
     display: flex;
@@ -31,4 +31,18 @@ body {
     width: 40px;
     margin-left: 10px;
     text-align: right;
+}
+
+.sub-controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-controls button {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 5px;
 }

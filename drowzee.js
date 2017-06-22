@@ -35,12 +35,12 @@ const getPolarCoordinates = function(index) {
     return [radius, revolutions * TAU];
 };
 
-const getColor = function(index) {
-    return d3.hcl(index / planetIndices.length * 360, 50, 50);
-};
-
 const orbitRadius = function(index) {
     return (index + INNERMOST_ORBIT_INDEX) / (planetIndices.length + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
+};
+
+const getColor = function(index) {
+    return d3.hcl(index / planetIndices.length * 360, 50, 50);
 };
 
 const togglePlay = function(value) {
@@ -63,7 +63,7 @@ const seek = function() {
     if (initialAuts != inputValue) {
         initialAuts = inputValue;
         auts = inputValue;
-        draw(initialAuts);
+        draw();
     }
 };
 
@@ -79,7 +79,7 @@ const parse = function() {
     if (initialAuts != inputValue) {
         initialAuts = inputValue;
         auts = inputValue;
-        draw(initialAuts);
+        draw();
     }
 };
 
