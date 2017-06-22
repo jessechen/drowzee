@@ -43,14 +43,13 @@ const togglePlay = function(value) {
         playing = true;
         d3.timer(tick);
     } else {
-        startAuts = parseInt(timeSlider.property("value"), 10)
+        startAuts = parseInt(timeSlider.property("value"), 10);
         playing = false;
     }
     playButton.text(playing ? "❚❚ Pause" : "▶ Play");
 };
 
-const seek = function(evt, auts) {
-    startAuts = auts;
+const seek = function() {
     togglePlay(false);
     draw(startAuts);
 };
@@ -59,13 +58,13 @@ const handleInput = function() {
     let inputValue = parseInt(timeInput.property("value"), 10);
     if (isNaN(inputValue) || inputValue < 0) {
         inputValue = 0;
-        timeInput.property("value", inputValue);
     } else if (inputValue > AUTS_PER_LOOP) {
         inputValue = AUTS_PER_LOOP - 1;
-        timeInput.property("value", inputValue);
     }
+    timeInput.property("value", inputValue);
     if (parseInt(timeSlider.property("value"), 10) != inputValue) {
         timeSlider.property("value", inputValue);
+        seek();
     }
 };
 
@@ -114,7 +113,8 @@ const playButton = d3.select(".play-button")
 
 const timeSlider = d3.select(".time-slider")
     .attr("min", 0)
-    .attr("max", AUTS_PER_LOOP - 1);
+    .attr("max", AUTS_PER_LOOP - 1)
+    .on("input", seek);
 
 const timeInput = d3.select(".time-input")
     .on("input", handleInput);
