@@ -78,7 +78,7 @@ const draw = function(auts) {
 
 const tick = function(time) {
     if (playing) {
-        auts = (startAuts + (time / 1000) * (SECONDS_PER_LOOP / AUTS_PER_LOOP)) % AUTS_PER_LOOP;
+        auts = (startAuts + (time / 1000) * (AUTS_PER_LOOP / SECONDS_PER_LOOP)) % AUTS_PER_LOOP;
         draw(auts);
     }
     return !playing;
