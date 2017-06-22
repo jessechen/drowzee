@@ -13,6 +13,7 @@ const MIN_ORBITS = 2;
 const INITIAL_ORBITS = 12;
 const MAX_ORBITS = 20;
 
+// Produces an array initially set to [0..11].
 let planetIndices = Array.from(Array(INITIAL_ORBITS).keys());
 let initialAuts = 0;
 let auts = 0;
@@ -30,12 +31,14 @@ const getY = function(index) {
 
 const getPolarCoordinates = function(index) {
     const radius = orbitRadius(index);
+    // The lower the index of the planet, the higher its speed.
     const speed = planetIndices.length + OUTERMOST_REVOLUTIONS_PER_LOOP - index;
-    const revolutions = auts / AUTS_PER_LOOP * speed;
+    const revolutions = speed * auts / AUTS_PER_LOOP;
     return [radius, revolutions * TAU];
 };
 
 const orbitRadius = function(index) {
+    // The lower the index of the planet, the smaller its orbit's radius.
     return (index + INNERMOST_ORBIT_INDEX) / (planetIndices.length + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
 };
 
@@ -103,9 +106,12 @@ const draw = function() {
     timeInput.property("value", Math.floor(auts));
 };
 
-const tick = function(time) {
+const tick = function(millis) {
     if (playing) {
-        auts = (initialAuts + (time / 1000) * (AUTS_PER_LOOP / SECONDS_PER_LOOP)) % AUTS_PER_LOOP;
+        // We need to keep track of initialAuts since we only know
+        // the number of millis since the timer started, not the
+        // number of millis since the last invocation.
+        auts = (initialAuts + (millis / 1000) * (AUTS_PER_LOOP / SECONDS_PER_LOOP)) % AUTS_PER_LOOP;
         draw();
     }
     return !playing;
@@ -163,5 +169,5 @@ const timeSlider = d3.select(".time-slider")
 const timeInput = d3.select(".time-input")
     .on("input", parse);
 
-draw(0);
 togglePlay(false);
+draw();
