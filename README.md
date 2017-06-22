@@ -5,7 +5,7 @@
 Production
 ----------
 
-[RawGit](https://cdn.rawgit.com/jessechen/drowzee/deployme/drowzee.html)
+[RawGit](https://cdn.rawgit.com/jessechen/drowzee/prod/drowzee.html)
 
 Setup
 -----
