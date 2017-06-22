@@ -26,13 +26,13 @@ const getY = function(index, auts) {
 
 const getPolarCoordinates = function(index, auts) {
     const radius = orbitRadius(index);
-    const speed = orbitCount + INNERMOST_ORBIT_INDEX + OUTERMOST_REVOLUTIONS_PER_LOOP - index;
+    const speed = orbitCount + OUTERMOST_REVOLUTIONS_PER_LOOP - index;
     const revolutions = auts / AUTS_PER_LOOP * speed;
     return [radius, revolutions * TAU];
 };
 
 const orbitRadius = function(index) {
-    return index / (orbitCount + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
+    return (index + INNERMOST_ORBIT_INDEX) / (orbitCount + INNERMOST_ORBIT_INDEX) * LARGEST_ORBIT_RADIUS;
 };
 
 const togglePlay = function(value) {
@@ -88,7 +88,7 @@ const surface = d3.select("svg");
 
 const orbits = surface
     .selectAll(".orbit")
-    .data(_.range(INNERMOST_ORBIT_INDEX, orbitCount + INNERMOST_ORBIT_INDEX))
+    .data(_.range(0, orbitCount))
     .enter().append("circle")
         .classed("orbit", true)
         .attr("cx", 0)
@@ -99,7 +99,7 @@ const orbits = surface
 
 const planets = surface
     .selectAll(".planet")
-    .data(_.range(INNERMOST_ORBIT_INDEX, orbitCount + INNERMOST_ORBIT_INDEX))
+    .data(_.range(0, orbitCount))
     .enter().append("circle")
         .classed("planet", true)
         .attr("cx", getX)
