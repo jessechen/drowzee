@@ -18,17 +18,17 @@ body {
 }
 
 .play-button {
-    width: 13%;
-    margin-right: 2%;
+    width: 60px;
+    margin-right: 10px;
 }
 
 .time-slider {
-    width: 75%;
+    flex-grow: 1;
     cursor: pointer;
 }
 
 .time-input {
-    width: 8%;
-    margin-left: 2%;
+    width: 40px;
+    margin-left: 10px;
     text-align: right;
 }
