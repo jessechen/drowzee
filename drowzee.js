@@ -88,7 +88,7 @@ const surface = d3.select("svg");
 
 const orbits = surface
     .selectAll(".orbit")
-    .data(_.range(0, orbitCount))
+    .data(Array.from(Array(orbitCount).keys()))
     .enter().append("circle")
         .classed("orbit", true)
         .attr("cx", 0)
@@ -99,7 +99,7 @@ const orbits = surface
 
 const planets = surface
     .selectAll(".planet")
-    .data(_.range(0, orbitCount))
+    .data(Array.from(Array(orbitCount).keys()))
     .enter().append("circle")
         .classed("planet", true)
         .attr("cx", getX)
