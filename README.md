@@ -5,7 +5,7 @@
 Production
 ----------
 
-[RawGit](https://cdn.rawgit.com/jessechen/drowzee/prod/drowzee.html)
+[GitHub Pages](https://jessechen.github.io/drowzee/drowzee.html)
 
 Setup
 -----
