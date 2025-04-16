@@ -1,9 +1,39 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import Orbiter from './Orbiter.svelte';
 
-    const CYCLE_TIME: number = 10_000;
+    const TICKS_PER_MILLI: number = 10;
+    const TICKS_PER_CYCLE: number = 10_000;
 
     let time: number = 0;
+    let playing: boolean = true;
+    let buttonText: string = '⏸';
+
+    onMount(async () => update());
+
+    function handleClick() {
+		playing = !playing;
+		buttonText = playing ? '⏸' : '▸';
+		update();
+	}
+
+    function update() {
+        if (playing) {
+            requestAnimationFrame(step);
+        }
+    }
+
+    function step(currentMillis: number, previousMillis?: number) {
+        if (previousMillis !== undefined) {
+            time += (currentMillis - previousMillis) / TICKS_PER_MILLI;
+            if (time > TICKS_PER_CYCLE) {
+                time = time % TICKS_PER_CYCLE;
+            }
+        }
+        if (playing) {
+            requestAnimationFrame((nextMillis) => step(nextMillis, currentMillis));
+        }
+    }
 </script>
 
 <svelte:head>
@@ -18,13 +48,14 @@
     </svg>
 </main>
 <footer>
-	<input class="slider" type="range" id="time" min="0" max="10000" bind:value={time} />
+	<button class="control" onclick={handleClick}>{buttonText}</button>
+    <input class="slider" type="range" id="time" min="0" max="10000" bind:value={time} />
 </footer>
 
 <style>
     main {
-		width: calc(100vmin - 50px);
-		height: calc(100vmin - 50px);
+		width: calc(100vmin - 5rem);
+		height: calc(100vmin - 5rem);
 	}
 
 	svg {
@@ -33,15 +64,19 @@
 	}
 
 	footer {
-		height: 50px;
+		height: 5rem;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
+    button, input {
+        cursor: pointer;
+    }
+
 	.slider {
 		width: 100%;
-		margin: 10px;
+		margin: 1rem;
 	}
 </style>
