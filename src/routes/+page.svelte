@@ -53,7 +53,6 @@
         <Orbiter color="green" orbits={4} distance={360} time={cycleProgress} />
         <Orbiter color="green" orbits={3} distance={400} time={cycleProgress} />
         <Orbiter color="green" orbits={2} distance={440} time={cycleProgress} />
-        <Orbiter color="green" orbits={1} distance={480} time={cycleProgress} />
     </svg>
 </main>
 <footer>
