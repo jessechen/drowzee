@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import Orbiter from './Orbiter.svelte';
 
-    const TICKS_PER_MILLI: number = 10;
+    const TICKS_PER_MILLI: number = 2;
     const TICKS_PER_CYCLE: number = 10_000;
 
     let time: number = 0;
@@ -42,9 +42,18 @@
 </svelte:head>
 <main>
     <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <Orbiter color="red" orbits={3} distance={100} {time} />
-        <Orbiter color="orange" orbits={2} distance={200} {time} />
-        <Orbiter color="yellow" orbits={1} distance={300} {time} />
+        <Orbiter color="green" orbits={12} distance={40} {time} />
+        <Orbiter color="green" orbits={11} distance={80} {time} />
+        <Orbiter color="green" orbits={10} distance={120} {time} />
+        <Orbiter color="green" orbits={9} distance={160} {time} />
+        <Orbiter color="green" orbits={8} distance={200} {time} />
+        <Orbiter color="green" orbits={7} distance={240} {time} />
+        <Orbiter color="green" orbits={6} distance={280} {time} />
+        <Orbiter color="green" orbits={5} distance={320} {time} />
+        <Orbiter color="green" orbits={4} distance={360} {time} />
+        <Orbiter color="green" orbits={3} distance={400} {time} />
+        <Orbiter color="green" orbits={2} distance={440} {time} />
+        <Orbiter color="green" orbits={1} distance={480} {time} />
     </svg>
 </main>
 <footer>
@@ -64,18 +73,22 @@
 	}
 
 	footer {
-		height: 5rem;
+		height: 4rem;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-    button, input {
+    button {
         cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+        margin: 0 1rem;
     }
 
 	.slider {
+        cursor: pointer;
 		width: 100%;
 		margin: 1rem;
 	}
