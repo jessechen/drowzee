@@ -2,18 +2,18 @@
     import { onMount } from 'svelte';
     import Orbiter from './Orbiter.svelte';
 
-    const TICKS_PER_MILLI: number = 2;
+    const TICKS_PER_MILLI: number = 1.5;
     const TICKS_PER_CYCLE: number = 10_000;
 
-    let time: number = 0;
-    let playing: boolean = true;
-    let buttonText: string = '⏸';
+    let currentTicks: number = $state(0);
+    let cycleProgress: number = $derived(currentTicks / TICKS_PER_CYCLE);
+    let playing: boolean = $state(true);
+    let buttonText: string = $derived(playing ? '⏸' : '▸');
 
     onMount(async () => update());
 
     function handleClick() {
 		playing = !playing;
-		buttonText = playing ? '⏸' : '▸';
 		update();
 	}
 
@@ -25,9 +25,9 @@
 
     function step(currentMillis: number, previousMillis?: number) {
         if (previousMillis !== undefined) {
-            time += (currentMillis - previousMillis) / TICKS_PER_MILLI;
-            if (time > TICKS_PER_CYCLE) {
-                time = time % TICKS_PER_CYCLE;
+            currentTicks += (currentMillis - previousMillis) / TICKS_PER_MILLI;
+            if (currentTicks > TICKS_PER_CYCLE) {
+                currentTicks = currentTicks % TICKS_PER_CYCLE;
             }
         }
         if (playing) {
@@ -42,23 +42,23 @@
 </svelte:head>
 <main>
     <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <Orbiter color="green" orbits={12} distance={40} {time} />
-        <Orbiter color="green" orbits={11} distance={80} {time} />
-        <Orbiter color="green" orbits={10} distance={120} {time} />
-        <Orbiter color="green" orbits={9} distance={160} {time} />
-        <Orbiter color="green" orbits={8} distance={200} {time} />
-        <Orbiter color="green" orbits={7} distance={240} {time} />
-        <Orbiter color="green" orbits={6} distance={280} {time} />
-        <Orbiter color="green" orbits={5} distance={320} {time} />
-        <Orbiter color="green" orbits={4} distance={360} {time} />
-        <Orbiter color="green" orbits={3} distance={400} {time} />
-        <Orbiter color="green" orbits={2} distance={440} {time} />
-        <Orbiter color="green" orbits={1} distance={480} {time} />
+        <Orbiter color="green" orbits={12} distance={40} time={cycleProgress} />
+        <Orbiter color="green" orbits={11} distance={80} time={cycleProgress} />
+        <Orbiter color="green" orbits={10} distance={120} time={cycleProgress} />
+        <Orbiter color="green" orbits={9} distance={160} time={cycleProgress} />
+        <Orbiter color="green" orbits={8} distance={200} time={cycleProgress} />
+        <Orbiter color="green" orbits={7} distance={240} time={cycleProgress} />
+        <Orbiter color="green" orbits={6} distance={280} time={cycleProgress} />
+        <Orbiter color="green" orbits={5} distance={320} time={cycleProgress} />
+        <Orbiter color="green" orbits={4} distance={360} time={cycleProgress} />
+        <Orbiter color="green" orbits={3} distance={400} time={cycleProgress} />
+        <Orbiter color="green" orbits={2} distance={440} time={cycleProgress} />
+        <Orbiter color="green" orbits={1} distance={480} time={cycleProgress} />
     </svg>
 </main>
 <footer>
 	<button class="control" onclick={handleClick}>{buttonText}</button>
-    <input class="slider" type="range" id="time" min="0" max="10000" bind:value={time} />
+    <input class="slider" type="range" id="time" min="0" max="10000" bind:value={currentTicks} />
 </footer>
 
 <style>
