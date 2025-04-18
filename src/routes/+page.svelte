@@ -2,8 +2,8 @@
     import { onMount } from 'svelte';
     import Orbiter from './Orbiter.svelte';
 
-    const TICKS_PER_MILLI: number = 1.5;
-    const TICKS_PER_CYCLE: number = 10_000;
+    const MILLIS_PER_CYCLE: number = 16_000;
+    const TICKS_PER_CYCLE: number = 12_000;
 
     let currentTicks: number = $state(0);
     let cycleProgress: number = $derived(currentTicks / TICKS_PER_CYCLE);
@@ -25,7 +25,7 @@
 
     function step(currentMillis: number, previousMillis?: number) {
         if (previousMillis !== undefined) {
-            currentTicks += (currentMillis - previousMillis) / TICKS_PER_MILLI;
+            currentTicks += (currentMillis - previousMillis) * TICKS_PER_CYCLE / MILLIS_PER_CYCLE;
             if (currentTicks > TICKS_PER_CYCLE) {
                 currentTicks = currentTicks % TICKS_PER_CYCLE;
             }
@@ -84,7 +84,7 @@
         cursor: pointer;
         width: 2rem;
         height: 2rem;
-        margin: 0 1rem;
+        margin-left: 1rem;
     }
 
 	.slider {
