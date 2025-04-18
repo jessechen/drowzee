@@ -42,17 +42,18 @@
 </svelte:head>
 <main>
     <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <Orbiter color="green" orbits={12} distance={40} time={cycleProgress} />
-        <Orbiter color="green" orbits={11} distance={80} time={cycleProgress} />
-        <Orbiter color="green" orbits={10} distance={120} time={cycleProgress} />
-        <Orbiter color="green" orbits={9} distance={160} time={cycleProgress} />
-        <Orbiter color="green" orbits={8} distance={200} time={cycleProgress} />
-        <Orbiter color="green" orbits={7} distance={240} time={cycleProgress} />
-        <Orbiter color="green" orbits={6} distance={280} time={cycleProgress} />
-        <Orbiter color="green" orbits={5} distance={320} time={cycleProgress} />
-        <Orbiter color="green" orbits={4} distance={360} time={cycleProgress} />
-        <Orbiter color="green" orbits={3} distance={400} time={cycleProgress} />
-        <Orbiter color="green" orbits={2} distance={440} time={cycleProgress} />
+        <Orbiter index={1} count={12} time={cycleProgress} />
+        <Orbiter index={2} count={12} time={cycleProgress} />
+        <Orbiter index={3} count={12} time={cycleProgress} />
+        <Orbiter index={4} count={12} time={cycleProgress} />
+        <Orbiter index={5} count={12} time={cycleProgress} />
+        <Orbiter index={6} count={12} time={cycleProgress} />
+        <Orbiter index={7} count={12} time={cycleProgress} />
+        <Orbiter index={8} count={12} time={cycleProgress} />
+        <Orbiter index={9} count={12} time={cycleProgress} />
+        <Orbiter index={10} count={12} time={cycleProgress} />
+        <Orbiter index={11} count={12} time={cycleProgress} />
+        <Orbiter index={12} count={12} time={cycleProgress} />
     </svg>
 </main>
 <footer>
