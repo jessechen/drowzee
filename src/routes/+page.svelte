@@ -25,7 +25,7 @@
 
     function step(currentMillis: number, previousMillis?: number) {
         if (previousMillis !== undefined) {
-            currentTicks += (currentMillis - previousMillis) * TICKS_PER_CYCLE / MILLIS_PER_CYCLE;
+            currentTicks += Math.floor((currentMillis - previousMillis) * TICKS_PER_CYCLE / MILLIS_PER_CYCLE);
             if (currentTicks > TICKS_PER_CYCLE) {
                 currentTicks = currentTicks % TICKS_PER_CYCLE;
             }
@@ -57,8 +57,9 @@
     </svg>
 </main>
 <footer>
-	<button class="control" onclick={handleClick}>{buttonText}</button>
-    <input class="slider" type="range" id="time" min="0" max="10000" bind:value={currentTicks} />
+	<button onclick={handleClick}>{buttonText}</button>
+    <input class="ticks" type="number" min="0" step="100" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
+    <input class="slider" type="range" min="0" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
 </footer>
 
 <style>
@@ -85,6 +86,13 @@
         width: 2rem;
         height: 2rem;
         margin-left: 1rem;
+    }
+
+    .ticks {
+        width: 4rem;
+        height: 2rem;
+        margin-left: 1rem;
+        text-align: end;
     }
 
 	.slider {
