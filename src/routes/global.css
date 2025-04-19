@@ -5,7 +5,7 @@ body {
     align-items: center;
 }
 
-body, input {
+body, input, button {
     font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
     font-size: 1rem;
 }

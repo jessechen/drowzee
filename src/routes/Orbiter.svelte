@@ -5,9 +5,9 @@
     const CENTER: number = 500;
     const MAX_DISTANCE: number = 480;
 
-    let speed: number = $derived(count - index + 2);
-    let distance: number = $derived(MAX_DISTANCE * (index / count));
-    let hue: number = $derived(360 * (index / count));
+    let speed: number = $derived(count - index + 1);
+    let distance: number = $derived(MAX_DISTANCE * ((index + 1) / count));
+    let hue: number = $derived(360 * ((index + 1) / count));
     let cx: number = $derived(Math.cos(time * TAU * speed) * distance + CENTER);
     let cy: number = $derived(Math.sin(time * TAU * speed) * distance + CENTER);
 </script>

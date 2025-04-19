@@ -31,10 +31,22 @@
         }
     }
 
-    function handleClick() {
+    function togglePause() {
 		playing = !playing;
 		update();
 	}
+
+    function increment() {
+        if (orbiterCount < 20) {
+            orbiterCount++;
+        }
+    }
+
+    function decrement() {
+        if (orbiterCount > 3) {
+            orbiterCount--;
+        }
+    }
 </script>
 
 <svelte:head>
@@ -49,10 +61,14 @@
     </svg>
 </main>
 <footer>
-	<button onclick={handleClick}>{buttonText}</button>
+	<button class="pause" onclick={togglePause}>{buttonText}</button>
     <input class="ticks" type="number" min="0" step="100" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
     <input class="slider" type="range" min="0" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
     <p class="display">{orbiterCount}</p>
+    <span class="spinner">
+        <button onclick={increment}>▲</button>
+        <button onclick={decrement}>▼</button>
+    </span>
 </footer>
 
 <style>
@@ -74,7 +90,7 @@
 		justify-content: center;
 	}
 
-    button {
+    .pause {
         cursor: pointer;
         width: 2rem;
         height: 2rem;
@@ -93,4 +109,18 @@
 		width: 100%;
 		margin: 1rem;
 	}
+
+    .spinner {
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+    }
+
+    .spinner button {
+        font-size: 0.5rem;
+        cursor: pointer;
+        width: 2rem;
+        height: 1rem;
+        margin: 0 1rem;
+    }
 </style>
