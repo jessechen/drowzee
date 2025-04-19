@@ -6,6 +6,7 @@
     const TICKS_PER_CYCLE: number = 12_000;
 
     let currentTicks: number = $state(0);
+    let orbiterCount: number = $state(12);
     let cycleProgress: number = $derived(currentTicks / TICKS_PER_CYCLE);
     let playing: boolean = $state(true);
     let buttonText: string = $derived(playing ? '⏸' : '▸');
@@ -42,24 +43,16 @@
 </svelte:head>
 <main>
     <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <Orbiter index={1} count={12} time={cycleProgress} />
-        <Orbiter index={2} count={12} time={cycleProgress} />
-        <Orbiter index={3} count={12} time={cycleProgress} />
-        <Orbiter index={4} count={12} time={cycleProgress} />
-        <Orbiter index={5} count={12} time={cycleProgress} />
-        <Orbiter index={6} count={12} time={cycleProgress} />
-        <Orbiter index={7} count={12} time={cycleProgress} />
-        <Orbiter index={8} count={12} time={cycleProgress} />
-        <Orbiter index={9} count={12} time={cycleProgress} />
-        <Orbiter index={10} count={12} time={cycleProgress} />
-        <Orbiter index={11} count={12} time={cycleProgress} />
-        <Orbiter index={12} count={12} time={cycleProgress} />
+        {#each { length: orbiterCount }, index}
+            <Orbiter {index} count={orbiterCount} time={cycleProgress} />
+        {/each}
     </svg>
 </main>
 <footer>
 	<button onclick={handleClick}>{buttonText}</button>
     <input class="ticks" type="number" min="0" step="100" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
     <input class="slider" type="range" min="0" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
+    <p class="display">{orbiterCount}</p>
 </footer>
 
 <style>
