@@ -12,11 +12,6 @@
 
     onMount(async () => update());
 
-    function handleClick() {
-		playing = !playing;
-		update();
-	}
-
     function update() {
         if (playing) {
             requestAnimationFrame(step);
@@ -34,6 +29,11 @@
             requestAnimationFrame((nextMillis) => step(nextMillis, currentMillis));
         }
     }
+
+    function handleClick() {
+		playing = !playing;
+		update();
+	}
 </script>
 
 <svelte:head>

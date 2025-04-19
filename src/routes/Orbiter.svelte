@@ -7,9 +7,10 @@
 
     let speed: number = $derived(count - index + 2);
     let distance: number = $derived(MAX_DISTANCE * (index / count));
+    let hue: number = $derived(360 * (index / count));
     let cx: number = $derived(Math.cos(time * TAU * speed) * distance + CENTER);
     let cy: number = $derived(Math.sin(time * TAU * speed) * distance + CENTER);
 </script>
 
-<circle cx={CENTER} cy={CENTER} r={distance} stroke="green" stroke-width="2" fill="none" />
-<circle {cx} {cy} r=16 fill="navy" />
+<circle cx={CENTER} cy={CENTER} r={distance} stroke="oklch(0.5 50% {hue})" stroke-width="2" fill="none" />
+<circle {cx} {cy} r=16 fill="oklch(0.2 50% 240)" />
