@@ -32,9 +32,9 @@
     }
 
     function togglePause() {
-		playing = !playing;
-		update();
-	}
+        playing = !playing;
+        update();
+    }
 
     function increment() {
         if (orbiterCount < 20) {
@@ -61,7 +61,7 @@
     </svg>
 </main>
 <footer>
-	<button class="pause" onclick={togglePause}>{buttonText}</button>
+    <button class="pause" onclick={togglePause}>{buttonText}</button>
     <input class="ticks" type="number" min="0" step="100" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
     <input class="slider" type="range" min="0" max={TICKS_PER_CYCLE} bind:value={currentTicks} />
     <p class="display">{orbiterCount}</p>
@@ -73,22 +73,22 @@
 
 <style>
     main {
-		width: calc(100vmin - 5rem);
-		height: calc(100vmin - 5rem);
-	}
+        width: calc(100vmin - 5rem);
+        height: calc(100vmin - 5rem);
+    }
 
-	svg {
-		width: 100%;
-		height: 100%;
-	}
+    svg {
+        width: 100%;
+        height: 100%;
+    }
 
-	footer {
-		height: 4rem;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+    footer {
+        height: 4rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     .pause {
         cursor: pointer;
@@ -104,11 +104,11 @@
         text-align: end;
     }
 
-	.slider {
+    .slider {
         cursor: pointer;
-		width: 100%;
-		margin: 1rem;
-	}
+        width: 100%;
+        margin: 1rem;
+    }
 
     .spinner {
         display: flex;
